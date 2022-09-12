@@ -10,11 +10,10 @@ import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.pahod.springjdbc.repository.Queries.SQL_CREATE_TABLE_FRIENDSHIPS;
-import static com.pahod.springjdbc.repository.Queries.SQL_DROP_TABLE_;
+import static com.pahod.springjdbc.repository.SqlQueries.SQL_CREATE_TABLE_FRIENDSHIPS;
+import static com.pahod.springjdbc.repository.SqlQueries.SQL_DROP_TABLE_;
 
 @Repository
 public class FriendshipRepository {
@@ -28,7 +27,7 @@ public class FriendshipRepository {
 
     public void dropTable() {
         jdbcTemplate.update(con -> {
-            String sqlCreateTableUsers = String.format( SQL_DROP_TABLE_, "friendships");
+            String sqlCreateTableUsers = String.format(SQL_DROP_TABLE_, "friendships");
             return con.prepareStatement(sqlCreateTableUsers);
         });
     }
@@ -41,7 +40,7 @@ public class FriendshipRepository {
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection
-                    .prepareStatement(Queries.SQL_INSERT_FRIENDSHIP, Statement.RETURN_GENERATED_KEYS);
+                    .prepareStatement(SqlQueries.SQL_INSERT_FRIENDSHIP, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, friendship.getUserId1());
             ps.setInt(2, friendship.getUserId2());
             ps.setTimestamp(3, friendship.getFriendTimestamp());

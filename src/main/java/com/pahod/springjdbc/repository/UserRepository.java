@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.pahod.springjdbc.repository.Queries.SQL_CREATE_TABLE_USERS;
-import static com.pahod.springjdbc.repository.Queries.SQL_DROP_TABLE_;
+import static com.pahod.springjdbc.repository.SqlQueries.SQL_CREATE_TABLE_USERS;
+import static com.pahod.springjdbc.repository.SqlQueries.SQL_DROP_TABLE_;
 
 @Repository
 public class UserRepository {
@@ -28,7 +28,7 @@ public class UserRepository {
 
     public void dropTable() {
         jdbcTemplate.update(con -> {
-            String sqlCreateTableUsers = String.format( SQL_DROP_TABLE_, "users");
+            String sqlCreateTableUsers = String.format(SQL_DROP_TABLE_, "users");
             return con.prepareStatement(sqlCreateTableUsers);
         });
     }
@@ -41,7 +41,7 @@ public class UserRepository {
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection
-                    .prepareStatement(Queries.SQL_INSERT_USER, Statement.RETURN_GENERATED_KEYS);
+                    .prepareStatement(SqlQueries.SQL_INSERT_USER, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, user.getFirstName());
             ps.setString(2, user.getLastName());
             ps.setDate(3, user.getBirthdate());

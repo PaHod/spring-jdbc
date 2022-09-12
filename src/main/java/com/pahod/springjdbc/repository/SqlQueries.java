@@ -1,6 +1,6 @@
 package com.pahod.springjdbc.repository;
 
-public class Queries {
+public class SqlQueries {
 
 
     public static final String SQL_DROP_TABLE_ =
@@ -28,6 +28,9 @@ public class Queries {
                     "  user_id INTEGER NOT NULL REFERENCES users(id) , " +
                     "  like_timestamp TIMESTAMP NOT NULL" +
                     " );";
+
+    public static final String SQL_CREATE_INDEX_FOR_LIKES =
+            "CREATE INDEX ON likes using hash (user_id);";
 
     public static final String SQL_CREATE_TABLE_FRIENDSHIPS =
             " CREATE TABLE IF NOT EXISTS friendships(" +

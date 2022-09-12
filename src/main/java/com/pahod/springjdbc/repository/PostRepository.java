@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.pahod.springjdbc.repository.Queries.SQL_CREATE_TABLE_POSTS;
-import static com.pahod.springjdbc.repository.Queries.SQL_DROP_TABLE_;
+import static com.pahod.springjdbc.repository.SqlQueries.SQL_CREATE_TABLE_POSTS;
+import static com.pahod.springjdbc.repository.SqlQueries.SQL_DROP_TABLE_;
 
 @Repository
 public class PostRepository {
@@ -28,7 +28,7 @@ public class PostRepository {
 
     public void dropTable() {
         jdbcTemplate.update(con -> {
-            String sqlCreateTableUsers = String.format( SQL_DROP_TABLE_, "posts");
+            String sqlCreateTableUsers = String.format(SQL_DROP_TABLE_, "posts");
             return con.prepareStatement(sqlCreateTableUsers);
         });
     }
@@ -41,7 +41,7 @@ public class PostRepository {
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection
-                    .prepareStatement(Queries.SQL_INSERT_POST, Statement.RETURN_GENERATED_KEYS);
+                    .prepareStatement(SqlQueries.SQL_INSERT_POST, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, post.getUserId());
             ps.setString(2, post.getText());
             ps.setTimestamp(3, post.getPostTimestamp());

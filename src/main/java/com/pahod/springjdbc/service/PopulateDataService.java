@@ -1,6 +1,5 @@
 package com.pahod.springjdbc.service;
 
-import com.pahod.springjdbc.utils.DataGenerator;
 import com.pahod.springjdbc.entity.Friendship;
 import com.pahod.springjdbc.entity.Like;
 import com.pahod.springjdbc.entity.Post;
@@ -9,6 +8,7 @@ import com.pahod.springjdbc.repository.FriendshipRepository;
 import com.pahod.springjdbc.repository.LikeRepository;
 import com.pahod.springjdbc.repository.PostRepository;
 import com.pahod.springjdbc.repository.UserRepository;
+import com.pahod.springjdbc.utils.DataGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

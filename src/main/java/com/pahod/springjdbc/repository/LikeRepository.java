@@ -13,8 +13,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.pahod.springjdbc.repository.Queries.SQL_CREATE_TABLE_LIKES;
-import static com.pahod.springjdbc.repository.Queries.SQL_DROP_TABLE_;
+import static com.pahod.springjdbc.repository.SqlQueries.*;
 
 @Repository
 public class LikeRepository {
@@ -28,20 +27,24 @@ public class LikeRepository {
 
     public void dropTable() {
         jdbcTemplate.update(con -> {
-            String sqlCreateTableUsers = String.format( SQL_DROP_TABLE_, "likes");
+            String sqlCreateTableUsers = String.format(SQL_DROP_TABLE_, "likes");
             return con.prepareStatement(sqlCreateTableUsers);
         });
     }
 
     public void createTable() {
         jdbcTemplate.update(con -> con.prepareStatement(SQL_CREATE_TABLE_LIKES));
+
+        //create index to speed up request Task1Repository.getRequiredData()
+        //Execution Time will drop from: 43063.166 ms to 196.949 ms
+        jdbcTemplate.update(con -> con.prepareStatement(SQL_CREATE_INDEX_FOR_LIKES));
     }
 
     public Like save(Like like) {
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection
-                    .prepareStatement(Queries.SQL_INSERT_LIKE, Statement.RETURN_GENERATED_KEYS);
+                    .prepareStatement(SqlQueries.SQL_INSERT_LIKE, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, like.getPostId());
             ps.setInt(2, like.getUserId());
             ps.setTimestamp(3, like.getLikeTimestamp());
